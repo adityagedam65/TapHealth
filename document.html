@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>TapHealth – Medical Documents</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- External CSS -->
+  <style>
+    :root {
+  --primary: #5b5df0;
+  --primary-light: #eef0ff;
+  --text-dark: #1f2937;
+  --text-muted: #6b7280;
+  --bg-main: #f8fafc;
+  --bg-white: #ffffff;
+  --border: #e5e7eb;
+  --danger-bg: #fdecec;
+  --danger-text: #ef4444;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background: var(--bg-main);
+  color: var(--text-dark);
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background: var(--bg-white);
+  border-right: 1px solid var(--border);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 32px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav a {
+  text-decoration: none;
+  padding: 12px 14px;
+  border-radius: 10px;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.nav a.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+.nav a:hover {
+  background: var(--primary-light);
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.emergency {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.logout {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Main Content */
+.main {
+  flex: 1;
+  padding: 28px 36px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.header h2 span {
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+/* Page Title */
+.page-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.page-title h1 {
+  font-size: 26px;
+}
+
+.upload-btn {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Upload Box */
+.upload-box {
+  background: var(--bg-white);
+  border: 2px dashed #c7cdfd;
+  border-radius: 16px;
+  padding: 40px;
+  text-align: center;
+  color: var(--text-muted);
+  margin-bottom: 30px;
+}
+
+.upload-box strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 16px;
+  color: var(--text-dark);
+}
+
+/* Documents */
+.doc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.doc-card {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.doc-icon {
+  width: 44px;
+  height: 44px;
+  background: #fee2e2;
+  color: #ef4444;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.doc-info h4 {
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.doc-info span {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .sidebar {
+    display: none;
+  }
+
+  .main {
+    padding: 20px;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div>
+        <div class="logo"><img src="{{ url_for('static', filename='Image/logo.jpg') }}" height="50"> TapHealth</div>
+
+        <nav class="nav">
+          <a href="{{url_for('Dashboard')}}">Dashboard</a>
+          <a href="{{url_for('documents')}}" class="active">Documents</a>
+          <a href="{{url_for('Wellness')}}">Wellness</a>
+          <a href="{{url_for('information')}}">Information</a>
+          <a href="{{url_for('insurance')}}">Insurance</a>
+          <a href="{{url_for('Map')}}">Map</a>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="emergency"><a href="{{url_for('emergency')}}">🚨 Emergency</a></div>
+        <a href="{{url_for('index')}}" class="logout">Log Out</a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <div class="header">
+        <h2>Welcome back, <span>{{ user_name }}</span></h2>
+        <div class="header-icons">
+          <div class="avatar">T</div>
+        </div>
+      </div>
+
+      <div class="page-title">
+        <h1>Medical Documents</h1>
+        <a href="{{url_for('document_upload')}}"><button class="upload-btn">⬆ Upload New</button></a>
+      </div>
+
+      <div class="upload-box">
+        ⬆
+        <strong>Click to upload or drag & drop</strong>
+        <div>pdf (Max 10MB)</div>
+      </div>
+
+      <div class="doc-list">
+        <div class="doc-card">
+          <div class="doc-icon">📄</div>
+          <div class="doc-info">
+           <h4>{{ file_name }}</h4>
+          <span>{{ file_date }}</span>
+          </div>
+        </div>
+        
+        <div class="doc-card">
+          <div class="doc-icon">📄</div>
+          <div class="doc-info">
+              <h4>{{ file_name }}</h4>
+              <span>{{ file_date }}</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>

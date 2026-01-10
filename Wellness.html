@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TapHealth - AI Wellness Planner</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #f5f7fb;
+    }
+
+    .app {
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px;
+      background: #ffffff;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #eee;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 20px;
+      margin-bottom: 30px;
+      color: #4f46e5;
+    }
+
+    .sidebar nav a {
+      display: block;
+      padding: 12px 14px;
+      margin-bottom: 8px;
+      text-decoration: none;
+      color: #555;
+      border-radius: 10px;
+    }
+
+    .sidebar nav a.active {
+      background: #4f46e5;
+      color: #fff;
+    }
+
+    .bottom {
+      margin-top: auto;
+    }
+
+    .emergency {
+      width: 100%;
+      padding: 10px;
+      background: #ffecec;
+      border: none;
+      border-radius: 10px;
+      color: #e11d48;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .logout {
+      text-decoration: none;
+      color: #666;
+      font-size: 14px;
+    }
+
+    /* Main Content */
+    .content {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .profile {
+      width: 36px;
+      height: 36px;
+      background: #6366f1;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+
+    .planner {
+      margin-top: 40px;
+    }
+
+    .planner h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    /* Card */
+    .card {
+      border: 2px dashed #e5e7eb;
+      border-radius: 20px;
+      padding: 50px;
+      max-width: 700px;
+      text-align: center;
+      background: #fafbff;
+      margin-bottom: 30px;
+    }
+
+    .icon {
+      width: 60px;
+      height: 60px;
+      background: #ffe4f1;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .card h2 {
+      margin-bottom: 10px;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .card p {
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    .generate, .ask-ai {
+      background: linear-gradient(135deg, #ec4899, #f43f5e);
+      color: #fff;
+      border: none;
+      padding: 14px 30px;
+      font-size: 16px;
+      border-radius: 14px;
+      cursor: pointer;
+    }
+
+    /* Chat input */
+    .chat-input {
+      display: flex;
+      justify-content: center;
+      margin-top: 15px;
+    }
+
+    .chat-input input {
+      padding: 10px;
+      width: 70%;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      margin-right: 10px;
+    }
+
+    .ai-response {
+      margin-top: 20px;
+      background: #f0f4ff;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo"><img src="{{ url_for('static', filename='Image/logo.jpg') }}" height="50"> TapHealth</div>
+
+    <nav>
+      <a href="{{url_for('Dashboard')}}">Dashboard</a>
+      <a href="{{url_for('documents')}}">Documents</a>
+      <a href="{{url_for('Wellness')}}" class="active">Wellness</a>
+      <a href="{{url_for('information')}}">Information</a>
+      <a href="{{url_for('insurance')}}">Insurance</a>
+      <a href="{{url_for('Map')}}">Map</a>
+    </nav>
+
+    <div class="bottom">
+      <a href="{{url_for('emergency')}}"><button class="emergency">Emergency</button></a>
+      <a href="{{url_for('index')}}" class="logout">Log Out</a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="content">
+    <header class="topbar">
+      <h3>Hi {{ user_name }}</h3>
+      <div class="profile">{{ user_name[0] }}</div>
+    </header>
+
+    <section class="planner">
+      <h1>AI Wellness Planner ✨</h1>
+      <p class="subtitle">Personalized diet & fitness plans for {{ user_name }}.</p>
+
+      <!-- AI Chat Bot Card -->
+      <div class="card">
+        <div class="icon">🤖</div>
+        <h2>AI Wellness Chat</h2>
+        <p>Ask me anything about your diet, exercises, or health tips!</p>
+
+        <form method="POST" action="{{ url_for('ai_chat') }}" class="chat-input">
+          <input type="text" name="user_input" placeholder="Type your question..." required>
+          <button type="submit" class="ask-ai">Ask AI</button>
+        </form>
+
+        {% if ai_response %}
+          <div class="ai-response">
+            <strong>AI:</strong> {{ ai_response }}
+          </div>
+        {% endif %}
+      </div>
+    </section>
+  </main>
+</div>
+
+</body>
+</html>

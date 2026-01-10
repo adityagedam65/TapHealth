@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TapHealth Dashboard</title>
+  <!-- FontAwesome for icons -->
+  <script src="https://kit.fontawesome.com/a81368914c.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Reset & base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', Arial, sans-serif;
+    }
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f8f9fa;
+      color: #1f2937;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+      height: 100vh;
+    }
+    .sidebar .logo {
+      font-weight: 700;
+      font-size: 22px;
+      margin-bottom: 30px;
+      color: #3b38ff;
+    }
+    .sidebar nav a {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      transition: background 0.3s, color 0.3s;
+      font-size: 15px;
+    }
+    .sidebar nav a:hover,
+    .sidebar nav a.active {
+      background-color: #635bff;
+      color: #fff;
+    }
+    .sidebar nav a .icon {
+      margin-right: 10px;
+      font-size: 18px;
+    }
+
+    /* Bottom links */
+    .bottom-links {
+      margin-top: auto; /* pushes to bottom */
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .bottom-links a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+    .bottom-links a.emergency {
+      background-color: #ffe5e5;
+      color: #ff4d4f;
+    }
+    .bottom-links a.logout {
+      background-color: #f1f3f5;
+      color: #1f2937;
+    }
+    .bottom-links a:hover {
+      background-color: #635bff;
+      color: #fff;
+    }
+
+    /* Main content */
+    .main {
+      flex: 1;
+      padding: 30px;
+    }
+    .main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+    .main-header h1 {
+      font-size: 24px;
+      font-weight: 600;
+    }
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .profile .notification {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      background: #f1f3f5;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .profile .notification::after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 8px;
+      height: 8px;
+      background: red;
+      border-radius: 50%;
+    }
+    .profile .avatar {
+      width: 40px;
+      height: 40px;
+      background: #635bff;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Insurance Wallet */
+    .wallet {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+    .card {
+      width: 320px;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #fff;
+      position: relative;
+    }
+    /* HDFC Card */
+    .card.hdfc {
+      background: #e53935;
+    }
+    .card.hdfc .label {
+      font-size: 12px;
+      border: 1px solid rgba(255,255,255,0.6);
+      padding: 2px 8px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 15px;
+    }
+    .card.hdfc .policy-holder {
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    .card.hdfc .policy-no {
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+    }
+    .card.hdfc .valid {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      align-self: flex-end;
+    }
+
+    /* LIC Card */
+    .card.lic {
+      background: linear-gradient(to bottom, #ffc107 0%, #0d47a1 100%);
+      color: #fff;
+    }
+    .card.lic .insurer {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+    .card.lic .insured-name {
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .card.lic .policy-no {
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+    .card.lic .badge {
+      background: #607d8b;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      width: fit-content;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo"><img src="{{ url_for('static', filename='Image/logo.jpg') }}" height="50"> TapHealth</div>
+    <nav>
+      <a href="{{ url_for('Dashboard') }}"><i class="fas fa-th-large icon"></i> Dashboard</a>
+      <a href="{{ url_for('documents') }}"><i class="fas fa-file-alt icon"></i> Documents</a>
+      <a href="{{ url_for('Wellness') }}"><i class="fas fa-heart icon"></i> Wellness</a>
+      <a href="{{ url_for('information') }}"><i class="fas fa-info-circle icon"></i> Information</a>
+      <a href="{{ url_for('insurance') }}"><i class="fas fa-credit-card icon"></i> Insurance</a>
+      <a href="{{ url_for('Map') }}"><i class="fas fa-map-marker-alt icon"></i> Map</a>
+    </nav>
+
+    <div class="bottom-links">
+      <a href="{{ url_for('emergency') }}" class="emergency"><i class="fas fa-bell icon"></i> Emergency</a>
+      <a href="{{ url_for('loginpage') }}" class="logout"><i class="fas fa-sign-out-alt icon"></i> Log Out</a>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="main-header">
+      <h1>Parth</h1>
+      <div class="profile">
+        <div class="notification"><i class="fas fa-bell"></i></div>
+        <div class="avatar">P</div>
+      </div>
+    </div>
+
+    <h2>Insurance Wallet</h2>
+    <div class="wallet">
+      <div class="card hdfc">
+        <span class="label">HEALTH SURAKSHA</span>
+        <div class="policy-holder">PARTH PARDESHI</div>
+        <div class="policy-no">9938 2210 0012</div>
+        <div class="valid">Valid: DEC 2025</div>
+      </div>
+
+      <div class="card lic">
+        <div class="insurer">LIC<br>Bharatiya Jeevan Bima Nigam</div>
+        <div class="insured-name">PARTH PARDESHI</div>
+        <div class="policy-no">LIC-8829-1100</div>
+        <div class="badge">Jeevan Arogya</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

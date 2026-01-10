@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Documents | TapHealth</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #f5f7fb;
+    }
+
+    .app {
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px;
+      background: #fff;
+      padding: 20px;
+      border-right: 1px solid #eee;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: #4f46e5;
+      margin-bottom: 30px;
+    }
+
+    .sidebar nav a {
+      display: block;
+      padding: 12px 14px;
+      margin-bottom: 8px;
+      border-radius: 10px;
+      color: #555;
+      text-decoration: none;
+    }
+
+    .sidebar nav a.active {
+      background: #4f46e5;
+      color: #fff;
+    }
+
+    .bottom {
+      margin-top: auto;
+    }
+
+    .logout {
+      text-decoration: none;
+      font-size: 14px;
+      color: #777;
+    }
+
+    /* Content */
+    .content {
+      flex: 1;
+      padding: 30px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    /* Upload Card */
+    .upload-card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      margin-bottom: 30px;
+    }
+
+    .upload-card input {
+      margin-right: 10px;
+    }
+
+    .upload-card button {
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    /* File List */
+    .file-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .file-item {
+      background: #fff;
+      padding: 16px 20px;
+      border-radius: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
+
+    .file-item span {
+      display: block;
+      font-size: 13px;
+      color: #777;
+    }
+
+    .actions a {
+      text-decoration: none;
+      background: #22c55e;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .empty {
+      color: #777;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo"><img src="{{ url_for('static', filename='Image/logo.jpg') }}" height="50"> TapHealth</div>
+
+    <nav>
+      <a href="{{ url_for('Dashboard') }}">Dashboard</a>
+      <a href="{{ url_for('documents') }}" class="active">Documents</a>
+      <a href="{{ url_for('Wellness') }}">Wellness</a>
+      <a href="{{ url_for('information') }}">Information</a>
+      <a href="{{ url_for('insurance') }}">Insurance</a>
+      <a href="{{ url_for('Map') }}">Map</a>
+    </nav>
+
+    <div class="bottom">
+      <a href="{{ url_for('logout') }}" class="logout">Log Out</a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="content">
+    <h1>Your Medical Documents</h1>
+    <p class="subtitle">Upload and manage your reports securely</p>
+
+    <!-- Upload -->
+    <div class="upload-card">
+      <form method="POST" action="/upload" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <a href="{{url_for('documents')}}"><button type="submit">Upload File</button></a>
+      </form>
+    </div>
+
+    <!-- Files -->
+    <div class="file-list">
+      {% if files %}
+        {% for file in files %}
+          <div class="file-item">
+            <div>
+              <strong>{{ file[0] }}</strong>
+              <span>{{ file[1] }}</span>
+            </div>
+            <div class="actions">
+              <a href="/download/{{ loop.index }}">Download</a>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="empty">No documents uploaded yet.</p>
+      {% endif %}
+    </div>
+
+  </main>
+
+</div>
+
+</body>
+</html>

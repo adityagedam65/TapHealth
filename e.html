@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Medical Emergency</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #e02020;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .overlay {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .card {
+      background: #fff;
+      width: 750px;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    }
+
+    .card-header {
+      background: #e02020;
+      color: #fff;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-left {
+      display: flex;
+      gap: 15px;
+    }
+
+    .icon {
+      font-size: 28px;
+      background: rgba(255,255,255,0.2);
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .close a {
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      background: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-body {
+      display: flex;
+      gap: 30px;
+      padding: 25px;
+    }
+
+    .left, .right {
+      width: 50%;
+    }
+
+    .label {
+      font-size: 12px;
+      color: #888;
+      font-weight: bold;
+    }
+
+    h2 {
+      margin: 6px 0;
+      font-size: 28px;
+    }
+
+    .dob {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .info-boxes {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .info {
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 15px;
+      width: 140px;
+    }
+
+    .info span {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .info strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 20px;
+    }
+
+    .blood {
+      color: #e02020;
+    }
+
+    .alert-box {
+      background: #fff1f1;
+      border: 1px solid #ffd6d6;
+      border-radius: 14px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    .alert-box span {
+      color: #e02020;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .alert-box h3 {
+      margin: 5px 0;
+      color: #e02020;
+    }
+
+    .btn {
+      display: block;
+      padding: 15px;
+      margin-top: 12px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: bold;
+      background: #16a34a;
+      color: #fff;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="overlay">
+  <div class="card">
+
+    <div class="card-header">
+      <div class="header-left">
+        <div class="icon">🚨</div>
+        <div>
+          <h1>MEDICAL EMERGENCY</h1>
+          <p>Show this screen to first responders</p>
+        </div>
+      </div>
+      <div class="close">
+        <a href="{{ url_for('Dashboard') }}">✕</a>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <!-- LEFT -->
+      <div class="left">
+        <span class="label">PATIENT NAME</span>
+        <h2>{{ user_name }}</h2>
+        <p class="dob">DOB: {{ user_dob }}</p>
+
+        <div class="info-boxes">
+          <div class="info">
+            <span>BLOOD TYPE</span>
+            <strong class="blood">{{ blood_group }}</strong>
+          </div>
+          <div class="info">
+            <span>ORGAN DONOR</span>
+            <strong>{{ organ_donor }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="right">
+        <div class="alert-box">
+          <span>CRITICAL ALLERGIES</span>
+          {% if allergies %}
+            {% for allergy in allergies.split(',') %}
+              <h3>{{ allergy }}</h3>
+            {% endfor %}
+          {% else %}
+            <h3>None</h3>
+          {% endif %}
+        </div>
+
+        <span class="label">EMERGENCY CONTACT</span>
+
+        <a href="tel:{{ emergency_contact_number }}" class="btn">
+          📞 Call {{ emergency_contact_name }}
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

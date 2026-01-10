@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Patient Medical History | TapHealth</title>
+  <style>
+        * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+        background: #f5f7fb;
+        color: #111;
+        }
+
+        .container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 20px;
+        }
+
+        .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        }
+
+        .top h1 {
+        color: #4f46e5;
+        font-weight: 700;
+        }
+
+        .badge {
+        background: #4f46e5;
+        color: white;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 14px;
+        }
+
+        .card {
+        background: white;
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .card h2 {
+        margin-bottom: 16px;
+        color: #4f46e5;
+        }
+
+        .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        }
+
+        .alert {
+        color: #dc2626;
+        font-weight: 600;
+        }
+
+        .visit {
+        padding: 14px;
+        border-radius: 12px;
+        background: #f1f3ff;
+        margin-bottom: 12px;
+        }
+
+        .visit h3 {
+        margin: 6px 0;
+        }
+
+        .date {
+        font-size: 13px;
+        color: #555;
+        }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <header class="top">
+      <h1>TapHealth</h1>
+      <span class="badge">Doctor View</span>
+    </header>
+
+    <!-- Patient Info -->
+    <section class="card">
+      <h2>Patient Information</h2>
+      <div class="grid">
+        <p><strong>Name:</strong> {{ name }}</p>
+        <p><strong>Age:</strong> {{ age }}</p>
+        <p><strong>Gender:</strong> {{ gender }}</p>
+        <p><strong>Blood Group:</strong> {{ blood_group }}</p>
+        <p><strong>Contact:</strong> {{ contact }}</p>
+        <p class="alert"><strong>Allergies:</strong> {{ allergies }}</p>
+      </div>
+    </section>
+
+    <!-- Medical Summary -->
+    <section class="card">
+      <h2>Medical Summary</h2>
+      <p><strong>Diagnosis:</strong> {{ diagnosis }}</p>
+      <p><strong>Chronic Conditions:</strong> {{ chronic }}</p>
+      <p><strong>Current Medicines:</strong> {{ medicines }}</p>
+      <p><strong>Primary Doctor:</strong> {{ doctor }}</p>
+      <p><strong>Last Updated:</strong> {{ updated_at }}</p>
+    </section>
+
+    <!-- Visit History -->
+    <section class="card">
+      <h2>Recent Visits</h2>
+
+      <div class="visit">
+        <span class="date">{upload_at}</span>
+        <h3>{diagnosis}</h3>
+        <p>{medicines}</p>
+      </div>
+
+        <div class="visit">
+            <span class="date">{upload_at}</span>
+            <h3>{diagnosis}</h3>
+            <p>{medicines}</p>
+
+        </div>
+        <div class="visit">
+            <span class="date">{upload_at}</span>
+            <h3>{diagnosis}</h3>
+            <p>{medicines}</p>
+        </div>
+    </section>
+
+  </div>
+
+</body>
+</html>
